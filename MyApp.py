@@ -5,4 +5,4 @@ import streamlit as st
 
 st.title('Hello World!')
 
-st.text('H')
+st.text('Actualizando contenido...')
