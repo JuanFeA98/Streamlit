@@ -35,11 +35,12 @@ col2.line_chart(tickerDF.Close)
 st.write('''
     #### **Gross Composition**
 ''')
-col1, col2, col3 = st.columns([1,0.5,4])
+col1, col2, col3 = st.columns([0.8,0.2,4])
 
-chart_data = pd.DataFrame(
-    np.random.randn(1, 2),
-    columns=["Good Quality", "Bad Quality"])
+chart_data = pd.DataFrame({
+    'Good Quality': [0.5],
+    'Bad Quality': [0.5],
+})
 
 col1.bar_chart(chart_data)
 
@@ -54,16 +55,18 @@ col3.line_chart(chart_data)
 st.write('''
     #### **Churn Composition**
 ''')
-col1, col2, col3 = st.columns([4,0.5,1])
+col1, col2, col3 = st.columns([4,0.2,0.8])
 
 chart_data = pd.DataFrame(
     np.random.randn(20, 2),
     columns=['Good Quality', 'Bad Quality']
 )
+
 col1.line_chart(chart_data)
 
-chart_data = pd.DataFrame(
-    np.random.randn(1, 2),
-    columns=["Good Quality", "Bad Quality"])
+chart_data = pd.DataFrame({
+    'Good Quality': [0.2],
+    'Bad Quality': [0.8],
+})
 
 col3.bar_chart(chart_data)
