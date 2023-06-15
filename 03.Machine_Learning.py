@@ -33,8 +33,6 @@ clf = RandomForestClassifier(random_state=13)
 clf.fit(X, y)
 
 # Prediction 
-
-
 prediction = clf.predict(df)
 prediction_proba = clf.predict_proba(df)
 
