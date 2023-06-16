@@ -44,4 +44,4 @@ y_pred = rfc.predict(X_test)
 print(f'Tenemos un modelo con presición del: {accuracy_score(y_pred=y_pred, y_true=y_test)}')
 
 # Guardamos el modelo
-pickle.dump(rfc, open('../../Models/penguis_class.pkl', 'wb'))
+pickle.dump(rfc, open('../../Models/penguin_class.pkl', 'wb'))
