@@ -12,13 +12,28 @@ def user_input_features():
     body_mass_g = st.sidebar.slider('Body mass (g)', 2700, 6300, 4207)
 
     data = {
-        'island': island, 
-        'sex': sex, 
         'bill_length_mm': bill_length_mm, 
         'bill_depth_mm': bill_depth_mm, 
         'flipper_length_mm': flipper_length_mm, 
-        'body_mass_g': body_mass_g 
+        'body_mass_g': body_mass_g,
+        'sex_female': False,
+        'sex_male': False,
+        'island_Biscoe': False,
+        'island_Dream': False, 
+        'island_Torgersen': False
     }
+
+    if sex == 'female':
+        data['sex_female'] = True
+    elif sex=='male':
+        data['sex_male'] = True
+
+    if island == 'Biscoe':
+        data['island_Biscoe'] = True
+    elif island == 'Dream':
+        data['island_Dream'] = True
+    elif island == 'Torgersen':
+        data['island_Torgersen'] = True
 
     features = pd.DataFrame(data, index=[0])
     return features

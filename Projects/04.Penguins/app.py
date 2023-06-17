@@ -29,32 +29,17 @@ if uploaded_file is not None:
 else:
     input_df = user_input_features()
 
-penguins_raw = pd.read_csv('https://raw.githubusercontent.com/dataprofessor/data/master/penguins_cleaned.csv')
-penguins = penguins_raw.drop(columns=['species'])
-
-df = pd.concat([input_df, penguins], axis=0)
-
-encode = ['sex', 'island']
-
-for col in encode:
-    dummy = pd.get_dummies(df[col], prefix=col)
-    df = pd.concat([df, dummy], axis=1)
-
-    del df[col]
-
-df = df[:1]
-
 if uploaded_file is None:
     st.write('Data from inputs:')
-    st.write(df)
+    st.write(input_df)
 else:
     st.write('Data uploaded:')
-    st.write(df)
+    st.write(input_df)
 
 load_rfc = pickle.load(open('../../Models/penguin_class.pkl', 'rb'))
 
-prediction = load_rfc.predict(df)
-prediction_proba = pd.DataFrame(load_rfc.predict_proba(df))
+prediction = load_rfc.predict(input_df)
+prediction_proba = pd.DataFrame(load_rfc.predict_proba(input_df))
 
 col1, col2 = st.columns([1, 1])
 
