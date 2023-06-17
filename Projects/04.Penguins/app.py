@@ -7,6 +7,7 @@ import pickle
 
 from utils.functions import user_input_features
 
+# Header
 st.write('''
     # **Penguins prediction app**
 
@@ -18,8 +19,11 @@ st.sidebar.markdown('''
     [Example CSV input file](https://raw.githubusercontent.com/dataprofessor/data/master/penguins_example.csv)
 ''')
 
+# SideBar
+# Componente para cargar archivos en formato csv
 uploaded_file = st.sidebar.file_uploader('Upload your input file', type=['csv'])
 
+# Si no se carga un archivo se utilizan los features de los inputs
 if uploaded_file is not None:
     input_df = pd.read_csv(uploaded_file)
 else:
@@ -41,22 +45,24 @@ for col in encode:
 df = df[:1]
 
 if uploaded_file is None:
+    st.write('Data from inputs:')
     st.write(df)
 else:
-    st.write('Awaiting CSV file to be uploaded.')
+    st.write('Data uploaded:')
     st.write(df)
 
 load_rfc = pickle.load(open('../../Models/penguin_class.pkl', 'rb'))
 
 prediction = load_rfc.predict(df)
-prediction_proba = load_rfc.predict_proba(df)
+prediction_proba = pd.DataFrame(load_rfc.predict_proba(df))
 
-st.subheader('Prediction')
+col1, col2 = st.columns([1, 1])
+
+prediction_proba.columns = ['Adelie', 'Chinstrap', 'Gentoo']
+
+col1.subheader('Prediction Probability')
+col1.write(prediction_proba)
+col2.subheader('Prediction')
+
 penguins_species = np.array(['Adelie', 'Chinstrap', 'Gentoo'])
-st.write(penguins_species[prediction])
-
-# prediction_proba.columns = ['Adelie', 'Chinstrap', 'Gentoo']
-
-st.subheader('Prediction Probability')
-st.write(prediction_proba)
-
+col2.write(penguins_species[prediction])
