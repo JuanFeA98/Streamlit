@@ -4,10 +4,11 @@ import numpy as np
 import streamlit as st
 import streamlit_authenticator as stauth
 
-import yaml
-from yaml.loader import SafeLoader
-with open('./config.yaml') as file:
-    config = yaml.load(file, Loader=SafeLoader)
+from utils.functions import call_data, initialize_firebase
+
+initialize_firebase()
+
+config = call_data()
 
 authenticator = stauth.Authenticate(
     config['credentials'],
