@@ -10,23 +10,32 @@ import os
 
 df = pd.read_csv('./Datos/Churn.csv', sep=';')
 
-variable_agrup = st.sidebar.selectbox(
-    'Variable de Agrupación', 
-    ('CANAL', 'REGIONAL')
-)
+variables_agrupacion = st.multiselect(
+    'Variables de agrupación: ',
+    ['CANAL', 'REGIONAL'],
+    ['CANAL'])
 
-df_resumen = df.groupby(f'{variable_agrup}')[['ENDING','OPENING','CHURN']].sum().reset_index()
-df_resumen['CHURN_RATE'] = df_resumen.apply(lambda x: round(x['CHURN']/((x['ENDING'] + x['OPENING'])/2), 2), axis=1)
-df_resumen['CHURN_SHARE'] = df_resumen['CHURN'].apply(lambda x: round(x/df_resumen['CHURN'].sum(), 2))
+color = st.selectbox(
+    'Color', 
+    variables_agrupacion
+    )
 
-# st.write(df_resumen)
+df_resumen = df.groupby(variables_agrupacion).agg({
+    'OPENING': 'sum',
+    'ENDING': 'sum',
+    'CHURN': 'sum'
+}).reset_index()
+
+df_resumen['%Churn_Rate'] = df_resumen.apply(lambda x: round(x['CHURN']/((x['OPENING'] + x['ENDING'])/2)*100, 2), axis=1)
+df_resumen['%Churn_Share'] = df_resumen['CHURN'].apply(lambda x: round(x/df_resumen['CHURN'].sum()*100, 2))
 
 fig = px.scatter(
     df_resumen, 
-    x=f"CHURN_RATE", 
-    y=f"CHURN_SHARE",
-    # text=f'{variable_agrup}',
-    hover_data=[f'{variable_agrup}', 'ENDING', 'CHURN']
+    x=f"%Churn_Rate", 
+    y=f"%Churn_Share",
+    color=color
+    # text=f'{variables_agrupacion}',
+    # hover_data=[variables_agrupacion, 'ENDING', 'CHURN']
 )
 
 st.plotly_chart(fig, use_container_width=True)
