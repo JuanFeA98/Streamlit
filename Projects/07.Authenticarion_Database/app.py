@@ -6,11 +6,6 @@ import streamlit_authenticator as stauth
 
 import requests
 
-import yaml
-from yaml.loader import SafeLoader
-with open('./config.yaml') as file:
-    config = yaml.load(file, Loader=SafeLoader)
-
 url = 'https://auth_demo-1-k6090383.deta.app/credentials/jmart'
 response = requests.get(url)
 
