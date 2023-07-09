@@ -27,15 +27,11 @@ for i in resultados:
     except:
         pass
 
-# st.write(f'{list(variables_agrupacion).extend(['A', 'B'])}')
-
 fig = px.scatter(
     df_agrupado, 
     x='SHARE', 
     y='RATE',
     color='segmentacion'
-    # text=f'{variables_agrupacion[0]}',
-    # hover_data=[variables_agrupacion]
 )
 
 st.plotly_chart(fig, use_container_width=True)
