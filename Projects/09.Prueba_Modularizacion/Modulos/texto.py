@@ -7,7 +7,6 @@ import streamlit as st
 
 df = px.data.iris() # iris is a pandas DataFrame
 
-
 def componente_1():
     
     variable_x = st.selectbox(
